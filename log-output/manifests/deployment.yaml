@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: log-output
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: log-output
+    template:
+        metadata:
+            labels:
+                app: log-output
+        spec:
+            containers:
+                - name: log-output
+                  image: nikogenix/log-output
+                  resources:
+                      limits:
+                          memory: 512Mi
+                          cpu: "1"
