@@ -14,7 +14,7 @@ spec:
         spec:
             containers:
                 - name: project
-                  image: nikogenix/project:v0.3
+                  image: nikogenix/project:v0.4
                   resources:
                       limits:
                           memory: 512Mi
