@@ -12,10 +12,17 @@ spec:
             labels:
                 app: project
         spec:
+            volumes: # Define volume
+                - name: shared-image
+                  persistentVolumeClaim:
+                      claimName: image-claim
             containers:
                 - name: project
-                  image: nikogenix/project:v0.4
+                  image: nikogenix/project:v0.6
                   resources:
                       limits:
                           memory: 512Mi
                           cpu: "1"
+                  volumeMounts: # Mount volume
+                      - name: shared-image
+                        mountPath: /usr/src/app/files
