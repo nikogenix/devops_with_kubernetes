@@ -12,10 +12,17 @@ spec:
             labels:
                 app: ping-pong
         spec:
+            volumes: # Define volume
+                - name: shared-image
+                  persistentVolumeClaim:
+                      claimName: image-claim
             containers:
                 - name: ping-pong
-                  image: nikogenix/ping-pong:v1
+                  image: nikogenix/ping-pong:v3
                   resources:
                       limits:
                           memory: 512Mi
                           cpu: "1"
+                  volumeMounts: # Mount volume
+                      - name: shared-image
+                        mountPath: /usr/src/app/files
