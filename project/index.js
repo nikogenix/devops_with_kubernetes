@@ -44,7 +44,18 @@ app.get("/", async (req, res) => {
 		await findAFile();
 	}
 
-	res.send(`<h1>hello kube</h1><img src="/image.jpg">`);
+	res.send(`
+	<h1>kube todo</h1>
+	<img src="/image.jpg">
+	<form>
+		<input type="text" id="inputText" placeholder="new todo">
+		<button type="button">add</button>
+  	</form>
+	<ul id="list">
+		<li>todo 1</li>
+		<li>todo 2</li>
+	</ul>
+	`);
 });
 
 app.get("/image.jpg", (req, res) => {
