@@ -14,7 +14,8 @@ spec:
         spec:
             volumes: # Define volume
                 - name: shared-image
-                  emptyDir: {}
+                  persistentVolumeClaim:
+                      claimName: image-claim
             containers:
                 - name: log-writer
                   image: nikogenix/log-writer:v1
@@ -26,7 +27,7 @@ spec:
                       - name: shared-image
                         mountPath: /usr/src/app/files
                 - name: log-reader
-                  image: nikogenix/log-reader:v1
+                  image: nikogenix/log-reader:v2
                   resources:
                       limits:
                           memory: 512Mi

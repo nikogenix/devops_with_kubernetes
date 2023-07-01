@@ -9,6 +9,7 @@ const port = process.env.PORT || 3006;
 
 const directory = path.join("/", "usr", "src", "app", "files");
 const filePath = path.join(directory, "log.txt");
+const pingFilePath = path.join(directory, "ping.txt");
 
 const getFile = async () =>
 	new Promise((res) => {
@@ -18,11 +19,21 @@ const getFile = async () =>
 		});
 	});
 
+const getPingFile = async () =>
+	new Promise((res) => {
+		fs.readFile(pingFilePath, (err, buffer) => {
+			if (err) return console.log(err);
+			res(buffer);
+		});
+	});
+
 let info = "";
+let ping = "";
 
 const output = async () => {
 	info = await getFile();
-	console.log(`${info}`);
+	ping = await getPingFile();
+	console.log(info, ping);
 	setTimeout(output, 5000);
 };
 
@@ -33,5 +44,5 @@ app.listen(port, () => {
 });
 
 app.get("/info", (req, res) => {
-	res.send(`<h1>${info}</h1>`);
+	res.send(`<h1>${info}</h1><h1>${[ping]}</h1>`);
 });
