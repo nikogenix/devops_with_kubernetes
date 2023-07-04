@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: log-output
+    name: log-output-dep
 spec:
     replicas: 1
     selector:
@@ -27,7 +27,7 @@ spec:
                       - name: shared-image
                         mountPath: /usr/src/app/files
                 - name: log-reader
-                  image: nikogenix/log-reader:v2
+                  image: nikogenix/log-reader:v7
                   resources:
                       limits:
                           memory: 512Mi

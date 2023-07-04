@@ -1,7 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    name: ingress-ping
+    name: ping-pong
+    labels:
+        name: ping-pong
 spec:
     rules:
         - http:
@@ -12,4 +14,4 @@ spec:
                         service:
                             name: ping-pong-svc
                             port:
-                                number: 2345
+                                number: 3005
