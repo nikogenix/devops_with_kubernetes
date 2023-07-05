@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+    namespace: log-and-ping
     name: log-output-dep
 spec:
     replicas: 1
