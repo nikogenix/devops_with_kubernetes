@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: project-frontend-dep
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: project-frontend
+    template:
+        metadata:
+            labels:
+                app: project-frontend
+        spec:
+            containers:
+                - name: project-frontend
+                  image: nikogenix/project:v0.10
+                  resources:
+                      limits:
+                          memory: 512Mi
+                          cpu: "1"
+                  env:
+                      - name: REACT_APP_BACKEND_URL
+                        value: http://localhost:8081/api/
+                      - name: REACT_APP_IMAGE_URL
+                        value: http://localhost:8081/image.jpg

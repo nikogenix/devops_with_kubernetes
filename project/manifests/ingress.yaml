@@ -1,7 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    name: ingress-project
+    name: project-ingress
+    labels:
+        name: project-ingress
 spec:
     rules:
         - http:
@@ -10,6 +12,20 @@ spec:
                     pathType: Prefix
                     backend:
                         service:
-                            name: project-svc
+                            name: project-frontend-svc
                             port:
-                                number: 2345
+                                number: 3021
+                  - path: /api
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: project-backend-svc
+                            port:
+                                number: 3022
+                  - path: /image.jpg
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: project-backend-svc
+                            port:
+                                number: 3022

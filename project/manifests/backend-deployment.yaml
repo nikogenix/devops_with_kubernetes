@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: project
+    name: project-backend-dep
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: project
+            app: project-backend
     template:
         metadata:
             labels:
-                app: project
+                app: project-backend
         spec:
             volumes: # Define volume
                 - name: shared-image
                   persistentVolumeClaim:
                       claimName: image-claim
             containers:
-                - name: project
-                  image: nikogenix/project:v0.7
+                - name: project-backend
+                  image: nikogenix/project-backend:v0.2
                   resources:
                       limits:
                           memory: 512Mi
