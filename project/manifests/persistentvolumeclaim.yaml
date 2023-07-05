@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    namespace: log-and-ping
+    namespace: project
     name: image-claim
 spec:
     storageClassName: manual
@@ -10,4 +10,4 @@ spec:
     resources:
         requests:
             storage: 200Mi
-    volumeName: pv-log-and-ping
+    volumeName: pv-project
