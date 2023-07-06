@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+    namespace: log-and-ping
+    name: postgres-service
+spec:
+    type: ClusterIP
+    selector:
+        app: postgres
+    ports:
+        - name: web
+          port: 5432
+          protocol: TCP
+          targetPort: 5432

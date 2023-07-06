@@ -15,8 +15,14 @@ spec:
         spec:
             containers:
                 - name: ping-pong
-                  image: nikogenix/ping-pong:v5
+                  image: nikogenix/ping-pong:v11
                   resources:
                       limits:
                           memory: 512Mi
                           cpu: "1"
+                  env:
+                      - name: DB_URL # ENV name passed to container
+                        valueFrom:
+                            secretKeyRef:
+                                name: postgres-secret
+                                key: DB_URL # ENV name in the secret

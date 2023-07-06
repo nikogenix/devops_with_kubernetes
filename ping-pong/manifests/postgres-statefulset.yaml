@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    namespace: log-and-ping
+    name: postgres-ss
+spec:
+    serviceName: postgres-service
+    replicas: 1
+    selector:
+        matchLabels:
+            app: postgres
+    template:
+        metadata:
+            labels:
+                app: postgres
+        spec:
+            containers:
+                - name: postgres
+                  image: postgres:latest
+                  ports:
+                      - name: web
+                        containerPort: 5432
+                  volumeMounts:
+                      - name: data
+                        mountPath: /data
+                  env:
+                      - name: POSTGRES_DB
+                        valueFrom:
+                            secretKeyRef:
+                                name: postgres-secret
+                                key: POSTGRES_DB
+                      - name: POSTGRES_USER
+                        valueFrom:
+                            secretKeyRef:
+                                name: postgres-secret
+                                key: POSTGRES_USER
+                      - name: POSTGRES_PASSWORD
+                        valueFrom:
+                            secretKeyRef:
+                                name: postgres-secret
+                                key: POSTGRES_PASSWORD
+    volumeClaimTemplates:
+        - metadata:
+              name: data
+          spec:
+              accessModes: ["ReadWriteOnce"]
+              storageClassName: local-path
+              resources:
+                  requests:
+                      storage: 100Mi
