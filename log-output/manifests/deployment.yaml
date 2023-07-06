@@ -28,7 +28,7 @@ spec:
                       - name: shared-image
                         mountPath: /usr/src/app/files
                 - name: log-reader
-                  image: nikogenix/log-reader:v7
+                  image: nikogenix/log-reader:v8
                   resources:
                       limits:
                           memory: 512Mi
@@ -36,3 +36,9 @@ spec:
                   volumeMounts: # Mount volume
                       - name: shared-image
                         mountPath: /usr/src/app/files
+                  env:
+                      - name: TEXT
+                        valueFrom:
+                            configMapKeyRef:
+                                key: text
+                                name: log-configmap

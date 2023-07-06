@@ -41,5 +41,9 @@ app.listen(port, () => {
 });
 
 app.get("/info", (req, res) => {
-	res.send(`<h1>${info}</h1><h1>ping/pongs: ${ping}</h1>`);
+	res.send(`
+	<h1>${process.env.TEXT}</h1>
+	<h1>${info}</h1>
+	<h1>ping/pongs: ${ping}</h1>
+	`);
 });
