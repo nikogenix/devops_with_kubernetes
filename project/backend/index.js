@@ -10,7 +10,7 @@ mongoose.set("strictQuery", false);
 mongoose.connect(db);
 
 const todoSchema = new mongoose.Schema({
-	task: String,
+	task: { type: String, required: true, maxLength: 140 },
 	complete: Boolean,
 });
 
@@ -49,6 +49,7 @@ const resolvers = {
 					task: args.task,
 					complete: false,
 				});
+				console.log(`added todo: ${newTodo}`);
 				return newTodo;
 			} catch (error) {
 				console.error(error);

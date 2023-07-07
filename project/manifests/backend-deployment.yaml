@@ -19,7 +19,7 @@ spec:
                       claimName: image-claim
             containers:
                 - name: project-backend
-                  image: nikogenix/project-backend:v0.3
+                  image: nikogenix/project-backend:v0.4
                   resources:
                       limits:
                           memory: 512Mi
