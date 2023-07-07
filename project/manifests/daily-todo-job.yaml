@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+    namespace: project
+    name: daily-todo
+spec:
+    schedule: "45 4 * * *"
+    jobTemplate:
+        spec:
+            template:
+                spec:
+                    containers:
+                        - name: daily-todo
+                          image: nikogenix/project-daily-todo:v1
+                          imagePullPolicy: IfNotPresent
+                          env:
+                              - name: MONGODB_URI # ENV name passed to container
+                                valueFrom:
+                                    secretKeyRef:
+                                        name: project-secret
+                                        key: MONGODB_URI # ENV name in the secret
+                    restartPolicy: OnFailure
