@@ -19,7 +19,7 @@ spec:
                       claimName: image-claim
             containers:
                 - name: project-backend
-                  image: nikogenix/project-backend:v0.2
+                  image: nikogenix/project-backend:v0.3
                   resources:
                       limits:
                           memory: 512Mi
@@ -27,3 +27,9 @@ spec:
                   volumeMounts: # Mount volume
                       - name: shared-image
                         mountPath: /usr/src/app/files
+                  env:
+                      - name: MONGODB_URI # ENV name passed to container
+                        valueFrom:
+                            secretKeyRef:
+                                name: project-secret
+                                key: MONGODB_URI # ENV name in the secret

@@ -3,11 +3,18 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
+const mongoose = require("mongoose");
+const db = process.env.MONGODB_URI;
 
-const todos = [
-	{ task: "create frontend", complete: false },
-	{ task: "create backend", complete: true },
-];
+mongoose.set("strictQuery", false);
+mongoose.connect(db);
+
+const todoSchema = new mongoose.Schema({
+	task: String,
+	complete: Boolean,
+});
+
+const TodoModel = mongoose.model("Todo", todoSchema);
 
 const typeDefs = gql`
 	type Todo {
@@ -26,13 +33,26 @@ const typeDefs = gql`
 
 const resolvers = {
 	Query: {
-		todos: () => todos,
+		todos: async () => {
+			try {
+				const todos = await TodoModel.find();
+				return todos;
+			} catch (error) {
+				console.error(error);
+			}
+		},
 	},
 	Mutation: {
-		addTodo: (root, args, context) => {
-			const newTodo = { task: args.task, complete: false };
-			todos.push(newTodo);
-			return newTodo;
+		addTodo: async (root, args) => {
+			try {
+				const newTodo = await TodoModel.create({
+					task: args.task,
+					complete: false,
+				});
+				return newTodo;
+			} catch (error) {
+				console.error(error);
+			}
 		},
 	},
 };
